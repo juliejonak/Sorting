@@ -33,7 +33,13 @@ print(merge([2,5,6,9,13], [1,3,7,7,11,12,14]))
 
 # TO-DO: implement the Merge Sort function below USING RECURSION
 def merge_sort( arr ):
-    # TO-DO
+    if len(arr) > 1:
+        middle = len(arr)/2
+        arr1 = arr[:middle]
+        arr2 = arr[middle:]
+        merge_sort(arr1)
+        merge_sort(arr2)
+    
 
     return arr
 
