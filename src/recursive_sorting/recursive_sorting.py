@@ -31,9 +31,12 @@ def merge( arrA, arrB ):
 def merge_sort( arr ):
     if len(arr) == 0 or len(arr) == 1:
         return arr
+    
+    mid_point = round(len(arr)/2)
+    arrA = merge_sort(arr[:mid_point])
+    arrB = merge_sort(arr[mid_point:])
 
-    return arr
-
+    return merge(arrA,arrB)
 
 # STRETCH: implement an in-place merge sort algorithm
 def merge_in_place(arr, start, mid, end):
