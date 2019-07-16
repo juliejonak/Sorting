@@ -3,43 +3,34 @@ def merge( arrA, arrB ):
     elements = len( arrA ) + len( arrB )
     merged_arr = [0] * elements
 
-    arrA_index = 0
-    arrB_index = 0
-
+    # Iterate through marged_arr to insert smallest item in arrA and arrB until merged_arr is full
     for i in range(0, len(merged_arr)):
-        while arrA_index < len(arrA) and arrB_index < len(arrB):
-
-            if arrA[arrA_index] < arrB[arrB_index]:
-                merged_arr[i] = arrA[arrA_index]
-                arrA_index += 1
-            
-            else: 
-                merged_arr[i] = arrB[arrB_index]
-                arrB_index += 1
-                
-            i+=1
+        # If arrA is empty, use arrB to fill
+        if len(arrA) == 0:
+            merged_arr[i] = min(arrB)
+            arrB.remove(min(arrB))
         
-        if arrA_index < len(arrA):
-            merged_arr[i] = arrA[arrA_index]
-            arrA_index += 1
+        # If arrB is empty, use arrA to fill
+        elif len(arrB) == 0:
+            merged_arr[i] = min(arrA)
+            arrA.remove(min(arrA))
 
-        if arrB_index < len(arrB):
-            merged_arr[i] = arrB[arrB_index]
-            arrB_index += 1
+        # If the smallest item in arrA is smaller than the smallest item in arrB, insert arrA's smallest item and then remove from arrA
+        elif min(arrA) < min(arrB):
+            merged_arr[i] = min(arrA)
+            arrA.remove(min(arrA))
 
+        # If the smallest item in arrB is smaller than the smallest item in arrA, insert arrB's smallest item and then remove from arrB
+        elif min(arrA) >= min(arrB):
+            merged_arr[i] = min(arrB)
+            arrB.remove(min(arrB))
+    
     return merged_arr
-
-print(merge([2,5,6,9,13], [1,3,7,7,11,12,14]))
 
 # TO-DO: implement the Merge Sort function below USING RECURSION
 def merge_sort( arr ):
-    if len(arr) > 1:
-        middle = len(arr)/2
-        arr1 = arr[:middle]
-        arr2 = arr[middle:]
-        merge_sort(arr1)
-        merge_sort(arr2)
-    
+    if len(arr) == 0 or len(arr) == 1:
+        return arr
 
     return arr
 
