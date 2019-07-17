@@ -1,3 +1,5 @@
+import random
+
 # TO-DO: complete the helper function below to merge 2 sorted arrays
 def merge( arrA, arrB ):
     elements = len( arrA ) + len( arrB )
@@ -55,39 +57,44 @@ def merge_sort_in_place(arr, l, r):
 
 # STRETCH: implement the Timsort function below
 # hint: check out https://github.com/python/cpython/blob/master/Objects/listsort.txt
-def timsort( arr ):
-    # If arr size is smaller than run, just use insertion sort
 
-    # Divide arr into runs of 32 (or less)
+def insertion_sort(arr):
+    for i in range(1, len(arr)):
+        # Starts looping from first unsorted element
+        unsorted = arr[i]
+        # Starts comparing against last sorted element
+        last_sorted_index = i-1
+
+        # While unsorted is less than the last sorted...
+        while last_sorted_index >= 0 and unsorted < arr[last_sorted_index]:
+            # Shifts last sorted to the right by one
+            arr[last_sorted_index + 1] = arr[last_sorted_index]
+            # Decrements down the last sorted index, until no longer larger than or hits zero
+            last_sorted_index -= 1
+
+        # Places unsorted element into correct spot
+        arr[last_sorted_index + 1] = unsorted
+    return arr
+
+
+def timsort( arr ):
+    # Divide arr into runs of 32 (or as chosen)
+    # If arr size is smaller than run, it will just use insertion sort
+    minirun = 32
+    for i in range(0, len(arr), minirun):
+        counter = 0
+        range_start = minirun * counter
+        range_end = minirun * (counter+1)
+        print(range_start, range_end)
+        print(f"i is: {i}")
+        print(insertion_sort(arr[range_start:range_end]))
+        counter += 1
+
     # Sort runs using insertion sort
     # Merge arrays using merge sort
 
-    # insertion sort:
-    def insertion_sort(arr):
-        for i in range(1, len(arr)):
-            # Starts looping from first unsorted element
-            unsorted = arr[i]
-            # Starts comparing against last sorted element
-            last_sorted_index = i-1
-
-            # While unsorted is less than the last sorted...
-            while last_sorted_index >= 0 and unsorted < arr[last_sorted_index]:
-                # Shifts last sorted to the right by one
-                arr[last_sorted_index + 1] = arr[last_sorted_index]
-                # Decrements down the last sorted index, until no longer larger than or hits zero
-                last_sorted_index -= 1
-
-            # Places unsorted element into correct spot
-            arr[last_sorted_index + 1] = unsorted
-
-        return arr
-
-        # find where in arr[0] - arr[marker - 1] it is smaller than
-        # shift element to the right of that position over one
-        # place there, marker += 1
-
     
-    return insertion_sort(arr)
+    # return insertion_sort(arr)
 
-
-print(timsort([2, 6, 5, 1, 8, 4]))
+test_sort = random.sample(range(100), 64)
+print(timsort(test_sort))
